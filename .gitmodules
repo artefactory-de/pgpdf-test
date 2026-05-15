@@ -1,0 +1,3 @@
+[submodule "pgpdf"]
+	path = pgpdf
+	url = https://github.com/Florents-Tselai/pgpdf.git

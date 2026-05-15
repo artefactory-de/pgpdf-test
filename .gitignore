@@ -1,0 +1,13 @@
+pgdata/
+pg-build/
+pg-install/
+ext-install/
+*.o
+*.so
+*.bc
+*.bak
+*.log
+pgpdf/results/
+pgpdf/regression.*
+test-pdfs/*
+!test-pdfs/.gitkeep
