@@ -28,6 +28,12 @@ need_file /usr/include/zlib.h              "zlib-dev"
 # pgpdf needs poppler with glib bindings.
 need_pkg  poppler-glib "poppler-glib-dev"
 
+# OCR preprocess (optional path): ocrmypdf shells out to tesseract +
+# ghostscript. uv (for ocrmypdf itself) is bootstrapped by ocr-pdf.sh, so
+# we don't probe it here.
+need_cmd  tesseract  "tesseract"
+need_cmd  gs         "ghostscript"
+
 if [[ ${#missing[@]} -eq 0 ]]; then
   echo "All deps present."
   echo "  gcc          : $(gcc -dumpversion)"
@@ -58,6 +64,8 @@ case "$family" in
       [bison]=bison [flex]=flex
       [readline-dev]=readline [zlib-dev]=zlib
       [poppler-glib-dev]=poppler-glib
+      [tesseract]="tesseract tesseract-data-eng"
+      [ghostscript]=ghostscript
     )
     pkgs=(); for k in "${missing[@]}"; do pkgs+=("${m[$k]:-$k}"); done
     mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | awk '!seen[$0]++')
@@ -68,6 +76,8 @@ case "$family" in
       [pkg-config]=pkg-config [bison]=bison [flex]=flex
       [readline-dev]=libreadline-dev [zlib-dev]=zlib1g-dev
       [poppler-glib-dev]=libpoppler-glib-dev
+      [tesseract]=tesseract-ocr
+      [ghostscript]=ghostscript
     )
     pkgs=(); for k in "${missing[@]}"; do pkgs+=("${m[$k]:-$k}"); done
     mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | awk '!seen[$0]++')
@@ -78,6 +88,8 @@ case "$family" in
       [pkg-config]=pkgconf-pkg-config [bison]=bison [flex]=flex
       [readline-dev]=readline-devel [zlib-dev]=zlib-devel
       [poppler-glib-dev]=poppler-glib-devel
+      [tesseract]=tesseract
+      [ghostscript]=ghostscript
     )
     pkgs=(); for k in "${missing[@]}"; do pkgs+=("${m[$k]:-$k}"); done
     mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | awk '!seen[$0]++')
@@ -88,6 +100,8 @@ case "$family" in
       [pkg-config]=pkgconf [bison]=bison [flex]=flex
       [readline-dev]=readline-dev [zlib-dev]=zlib-dev
       [poppler-glib-dev]=poppler-dev
+      [tesseract]="tesseract-ocr tesseract-ocr-data-eng"
+      [ghostscript]=ghostscript
     )
     pkgs=(); for k in "${missing[@]}"; do pkgs+=("${m[$k]:-$k}"); done
     mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | awk '!seen[$0]++')

@@ -2,6 +2,7 @@ pgdata/
 pg-build/
 pg-install/
 ext-install/
+bin/
 *.o
 *.so
 *.bc
